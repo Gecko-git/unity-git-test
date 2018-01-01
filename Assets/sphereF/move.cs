@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterController))]
 public class move : MonoBehaviour {
 	
-	public float speed = 3.0F;
+	public static float speed = 3.0F;
 
 	private Vector3 moveDirection;
 	private CharacterController controller;
@@ -39,9 +39,9 @@ public class move : MonoBehaviour {
 
 	void speedChange(bool sF,float dTS){					//速度変化関数
 		if (sF == true) {
-			dTS -= Time.deltaTime*20;
+			dTS -= Time.deltaTime*40;
 		} else {
-			dTS += Time.deltaTime*30;
+			dTS += Time.deltaTime*60;
 		}
 
 		speed += dTS;
