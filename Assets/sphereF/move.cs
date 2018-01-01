@@ -6,6 +6,7 @@ using UnityEngine;
 public class move : MonoBehaviour {
 	
 	public static float speed = 3.0F;
+	public static float hp=10f;
 
 	private Vector3 moveDirection;
 	private CharacterController controller;
@@ -14,12 +15,21 @@ public class move : MonoBehaviour {
 	private float rotationSpeed=5f;
 	private float deltaTimeSpeed = 0.5F;
 	private bool speedFlag= true;
+	private float attackTime = 0f;
+	public static bool attackFlag = true;
+
+	GameObject attackField;
 
 	void Start () {
+		this.attackField = GameObject.Find("Cylinder");
+		this.attackField.SetActive (false);
 		controller = GetComponent<CharacterController>();
 	}
-	
+
 	void Update () {
+		
+		attack ();
+
 		if (Input.GetKey (KeyCode.LeftShift)) {
 			speedFlag = true;
 			rotationSpeed = 5F;
@@ -35,6 +45,24 @@ public class move : MonoBehaviour {
 		else moveDirection.y -= gravity * Time.deltaTime;
 		controller.Move(moveDirection * Time.deltaTime);
 
+	}
+
+	void attack(){		//攻撃関数
+		if (attackTime == 0  && Input.GetKey (KeyCode.Z)) {
+				this.attackField.SetActive (true);
+				attackFlag = true;
+		}
+
+		if (attackFlag == true) {
+			if (attackTime < 1) attackTime += Time.deltaTime;
+			else {
+				this.attackField.SetActive (false);
+				attackFlag = false;
+			}
+		} else {
+			if(attackTime > 0) attackTime -= Time.deltaTime;
+			else attackTime =0;
+		}
 	}
 
 	void speedChange(bool sF,float dTS){					//速度変化関数
