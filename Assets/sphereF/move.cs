@@ -41,8 +41,8 @@ public class move : MonoBehaviour {
 			speedChange(speedFlag,deltaTimeSpeed);
 			rotation (rotationSpeed);
 
-		if (controller.isGrounded) moveDirection = transform.transform.forward * speed * 1;
-		else moveDirection.y -= gravity * Time.deltaTime;
+		moveDirection = transform.transform.forward * speed * 1 + transform.transform.up * gravity * Time.deltaTime * (-1) + transform.transform.up * speed * Input.GetAxis ("Vertical") * (-1);
+
 		controller.Move(moveDirection * Time.deltaTime);
 
 	}
